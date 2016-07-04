@@ -48,12 +48,14 @@ crypter.decryptFile = function decryptFile(filepath, destpath) {
   r.pipe(decrypt).pipe(w);
 };
 
-crypter.decryptFilePipe = function decryptFilePipe(filepath, r) {
+crypter.decryptFilePipe = function decryptFilePipe(filepath, res) {
+  var r = fs.createReadStream(filepath);
+
   // decrypt content
   var decrypt = crypto.createDecipher(algorithm, password);
 
   // start pipe
-  r.pipe(decrypt);
+  r.pipe(decrypt).pipe(res);
 };
 
 crypter.getFoldersAndFilesRecursive = function getFoldersAndFilesRecursive(dirpath) {
